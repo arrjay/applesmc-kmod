@@ -10,14 +10,15 @@ Summary:	applesmc-osk %{version} dkms package
 Name:		applesmc-osk
 Version:	%{version}
 License:	%license
-Release:	2
+Release:	3
 BuildArch:	noarch
 Group:		System/Kernel
 Requires: 	dkms >= 1.95
 BuildRequires: 	dkms
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root/
-# git archive --prefix=applesmc-osk-0.2a1d5d-2/ -o ~/rpmbuild/SOURCES/applesmc-osk-0.2a1d5d-2.tgz 0.2a1d5d-2
+# git archive --prefix=applesmc-osk-0.2a1d5d-3/ -o ~/rpmbuild/SOURCES/applesmc-osk-0.2a1d5d-3.tgz 0.2a1d5d-3
 Source0:	%{name}-%{version}-%{release}.tgz
+Requires:	kernel-devel
 
 %description
 Kernel module for %{module_name} %{version} with OSK support.
@@ -62,6 +63,8 @@ exit 0
 %{_srcdir}
 
 %changelog
-* %(date "+%a %b %d %Y") %packager %{version}-%{release}
-- Automatic build by DKMS
+* Sat Mar 19 2016 RJ Bergeron <rbergero@gmail.com>
+- require a kernel-devel
 
+* Sat Mar 19 2016 RJ Bergeron <rbergero@gmail.com>
+- initial packaging
