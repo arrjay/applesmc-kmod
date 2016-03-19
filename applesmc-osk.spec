@@ -10,13 +10,13 @@ Summary:	applesmc-osk %{version} dkms package
 Name:		applesmc-osk
 Version:	%{version}
 License:	%license
-Release:	3
+Release:	4
 BuildArch:	noarch
 Group:		System/Kernel
 Requires: 	dkms >= 1.95
 BuildRequires: 	dkms
 BuildRoot: 	%{_tmppath}/%{name}-%{version}-%{release}-root/
-# git archive --prefix=applesmc-osk-0.2a1d5d-3/ -o ~/rpmbuild/SOURCES/applesmc-osk-0.2a1d5d-3.tgz 0.2a1d5d-3
+# git archive --prefix=applesmc-osk-0.2a1d5d-4/ -o ~/rpmbuild/SOURCES/applesmc-osk-0.2a1d5d-4.tgz 0.2a1d5d-4
 Source0:	%{name}-%{version}-%{release}.tgz
 Requires:	kernel-devel
 
@@ -32,6 +32,8 @@ if [ "$RPM_BUILD_ROOT" != "/" ]; then
 fi
 mkdir -p $RPM_BUILD_ROOT/%{_srcdir}/%{module_name}-%{version}
 cp -R . $RPM_BUILD_ROOT/%{_srcdir}/%{module_name}-%{version}
+mkdir -p $RPM_BUILD_ROOT/etc/depmod.d
+install -m 644 applesmc.conf /etc/depmod.d/applesmc.conf
 
 %clean
 if [ "$RPM_BUILD_ROOT" != "/" ]; then
@@ -61,6 +63,7 @@ exit 0
 %files
 %defattr(-,root,root)
 %{_srcdir}
+/etc/depmod.d/*
 
 %changelog
 * Sat Mar 19 2016 RJ Bergeron <rbergero@gmail.com>
