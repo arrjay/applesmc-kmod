@@ -1034,6 +1034,24 @@ static ssize_t applesmc_key_at_index_store(struct device *dev,
 	return count;
 }
 
+static ssize_t applesmc_osk_show(struct device *dev,
+				struct device_attribute *attr, char *sysfsbuf)
+{
+	int ret;
+	char buf[65];
+
+	mutex_lock(&smcreg.mutex);
+	ret = read_smc(APPLESMC_READ_CMD, "OSK0", buf, 32);
+	if (!ret)
+		ret = read_smc(APPLESMC_READ_CMD, "OSK1", buf + 32, 32);
+	mutex_unlock(&smcreg.mutex);
+	if (ret)
+		return ret;
+
+	buf[64] = '\0';
+	return snprintf(sysfsbuf, PAGE_SIZE, "%s\n", buf);
+}
+
 static struct led_classdev applesmc_backlight = {
 	.name			= "smc::kbd_backlight",
 	.default_trigger	= "nand-disk",
@@ -1048,6 +1066,7 @@ static struct applesmc_node_group info_group[] = {
 	{ "key_at_index_type", applesmc_key_at_index_type_show },
 	{ "key_at_index_data_length", applesmc_key_at_index_data_length_show },
 	{ "key_at_index_data", applesmc_key_at_index_read_show },
+        { "osk", applesmc_osk_show },
 	{ }
 };
 
