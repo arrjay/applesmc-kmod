@@ -33,7 +33,7 @@ fi
 mkdir -p $RPM_BUILD_ROOT/%{_srcdir}/%{module_name}-%{version}
 cp -R . $RPM_BUILD_ROOT/%{_srcdir}/%{module_name}-%{version}
 mkdir -p $RPM_BUILD_ROOT/etc/depmod.d
-install -m 644 applesmc.conf /etc/depmod.d/applesmc.conf
+install -m 644 applesmc.conf $RPM_BUILD_ROOT/etc/depmod.d/applesmc.conf
 
 %clean
 if [ "$RPM_BUILD_ROOT" != "/" ]; then
